@@ -65,10 +65,15 @@ export const AddProduct = expressAsyncHandler(async (req, res) => {
     ram: req.body.ram,
     battery: req.body.battery,
     rom: req.body.rom,
-    camera: req.body.camera,
+    disk: req.body.disk,
+    card: req.body.card,
+    screen: req.body.screen,
+    cameraAfter: req.body.cameraAfter,
+    cameraBefore: req.body.cameraBefore,
+    resolution: req.body.resolution,
+
     special: req.body.special,
     design: req.body.design,
-    screen: req.body.screen,
   });
   const newProduct = await product.save();
 
@@ -106,18 +111,46 @@ export const UpdateProduct = expressAsyncHandler(async (req, res) => {
     product.ram = req.body.ram;
     product.battery = req.body.battery;
     product.rom = req.body.rom;
-    product.camera = req.body.camera;
+    product.screen = req.body.screen;
+    product.cameraAfter = req.body.cameraAfter;
+    product.cameraBefore = req.body.cameraBefore;
+    product.resolution = req.body.resolution;
+    product.card = req.body.card;
+    product.disk = req.body.disk;
+    
+
+
     product.special = req.body.special;
     product.design = req.body.design;
-    product.screen = req.body.screen;
 
     const updateProduct = await product.save();
     if (updateProduct) {
-      res.send("update success");
+        return res
+        .status(201)
+        .send({ message: "New Product Created", data: updateProduct });
     }
   }
 
   return res.send("update fail");
+});
+
+export const HandlePaymentProduct = expressAsyncHandler(async (req, res) => {
+    const data = req.body
+    let i = 0
+   while( i < data.length ) {
+    let id = data[i].idProduct
+    const product = await ProductModel.findById(id);
+    if(product) {
+        product.amount = product.amount - data[i].qty;
+        // console.log(product.amount)
+        const updateProduct = await product.save();
+        if (updateProduct) {
+          res.send("update success");
+        }
+    }
+    i++
+   }
+   return res.send("update fail");
 });
 
 export const DeleteProduct = expressAsyncHandler(async (req, res) => {
@@ -135,15 +168,13 @@ export const DeleteProduct = expressAsyncHandler(async (req, res) => {
 
 export const DeleteAllProduct = expressAsyncHandler (async (req, res) => {
 
-
     const deleteProduct = await ProductModel.deleteMany({})
-    res.send({message: 'product deleted'})
-    // if(deleteProduct){
-    //     await deleteProduct.remove()
-    //     res.send({message: 'product deleted'})
-    // } else{
-    //     res.send('error in deletetion')
-    // }
+
+     if(deleteProduct){
+        res.send({message: 'product deleted'})
+    } else{
+        res.send('error in deletetion')
+    }
 
 });
 

@@ -91,9 +91,6 @@ export const updateOrder = expressAsyncHandler(async (req, res) => {
       items,
     };
     updateOrder.order_code = req.params.id;
-    // await updateOrder.save();
-    // res.send(updateOrder);
-// --------------------
     try {
       const { data } = await axios.post(
         "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create",
@@ -106,7 +103,6 @@ export const updateOrder = expressAsyncHandler(async (req, res) => {
         }
       );
 
-      // console.log(updateOrder)
       const order_code = data.data.order_code;
 
       updateOrder.order_code = order_code;
@@ -116,8 +112,6 @@ export const updateOrder = expressAsyncHandler(async (req, res) => {
 
     } catch (error) {
       console.log(error)
-      // console.log(updateOrder)
-
     }
   } else {
     res.send({ msg: "product not found" });
@@ -223,14 +217,26 @@ export const GetAllOrderPaid = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export const DeleteOrder = expressAsyncHandler(async (req, res) => {
-  const deleteOrder = await OrderModel.findById({_id: req.params.id});
-
-  if (deleteOrder) {
-    await deleteOrder.remove();
-    res.send({ message: "product deleted" });
+export const GetAllOrderCancel = expressAsyncHandler(async (req, res) => {
+  const Order = await OrderModel.find({ status: "cancel" }).sort({
+    createdAt: -1,
+  });
+  if (Order) {
+    res.send(Order);
   } else {
-    res.send("error in delete order");
+    res.status(401).send({ message: "no order" });
+  }
+});
+
+export const DeleteOrder = expressAsyncHandler(async (req, res) => {
+  const status = "cancel";
+  const Order = await OrderModel.findById({_id: req.params.id});
+  if (Order) {
+    Order.status = status;
+    await Order.save();
+    res.send(Order);
+  } else {
+    res.status(401).send({ message: "no order" });
   }
 });
 

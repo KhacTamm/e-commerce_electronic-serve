@@ -14,6 +14,7 @@ import {
   GetOrderPaidByUser,
   GetAllOrderInAMonth,
   GetAllOrderPaypal,
+  GetAllOrderCancel,
   GetOrderPaypalByUser,
   updateOrder,
   PrintOrderGhn,
@@ -29,12 +30,13 @@ OrderRouter.post("/cancel/:id", clientCancelOrder);
 OrderRouter.get("/print/:id", PrintOrderGhn);
 OrderRouter.put("/shipping/:id", ShippingProduct);
 OrderRouter.put("/paid/:id", PaidProduct);
-OrderRouter.delete('/delete/:id', DeleteOrder)
+OrderRouter.put('/delete/:id', DeleteOrder)
 
 OrderRouter.get("/orderPaypal", GetAllOrderPaypal);
 OrderRouter.get("/orderPendding", GetAllOrderPendding);
 OrderRouter.get("/orderShipping", GetAllOrderShipping);
 OrderRouter.get("/orderPaid", GetAllOrderPaid);
+OrderRouter.get("/orderCancel", GetAllOrderCancel);
 
 OrderRouter.get("/allOrderInAMonth", GetAllOrderInAMonth);
 

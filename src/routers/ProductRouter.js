@@ -8,6 +8,7 @@ import {
   DeleteAllProduct,
   CommentProduct,
   UpdateProduct,
+  HandlePaymentProduct,
 
   SearchProduct,
   SearchType,
@@ -49,12 +50,28 @@ ProductRouter.put(
   upload.single("image"),
   UpdateProduct
 );
+ProductRouter.put(
+  "/handlepayment",
+  // isAuth,
+  // isAdmin,
+  // upload.single("image"),
+  HandlePaymentProduct
+);
 ProductRouter.post(
   "/blog/:id",
   // isAuth,
   // isAdmin,
   BlogProduct
 );
+
+ProductRouter.delete(
+  "/delete/all",
+  // isAuth,
+  // isAdmin,
+  upload.single("image"),
+  DeleteAllProduct
+);
+
 ProductRouter.delete(
   "/delete/:id",
   // isAuth,
@@ -62,13 +79,9 @@ ProductRouter.delete(
   upload.single("image"),
   DeleteProduct
 );
-ProductRouter.delete(
-  "/delete",
-  // isAuth,
-  // isAdmin,
-  upload.single("image"),
-  DeleteAllProduct
-);
+
+
+
         
 ProductRouter.get('/search/product', SearchProduct)
 ProductRouter.get('/search/type', SearchType)

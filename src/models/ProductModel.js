@@ -31,12 +31,12 @@ const Product = new Schema(
   {
     name: { type: String, required: true },
     price: { type: Number, required: true },
+    amount: {type: Number, require: true},
     salePrice: { type: Number, required: true },
     type: { type: String, required: true },
     brand: { type: String},
     image: { type: String },
-    amount: Number,
-    property: {type: Array},
+    // property: {type: Array},
 
 
     cloudinary_id: { type: String },
@@ -51,10 +51,15 @@ const Product = new Schema(
     ram: String,
     battery: String,
     rom: String,
-    camera: String,
+    screen: String,
+    resolution: String,
+    disk: String,
+    card: String,
+
+    cameraAfter: String,
+    cameraBefore: String,
     special: String,
     design: String,
-    screen: String,
   },
   {
     timestamps: true,

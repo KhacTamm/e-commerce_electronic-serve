@@ -50,6 +50,7 @@ export const addToCart = expressAsyncHandler(async (req, res) => {
             name: product.name,
             salePrice: product.salePrice,
             price: product.price,
+            amount: product.amount,
             qty: qty,
             image: product.image,
         }
@@ -105,7 +106,7 @@ export const deleteToCart = expressAsyncHandler(async (req, res) => {
 export const deleteAllToCart = expressAsyncHandler(async (req, res) => {
   const userCart = await CartModel.find({idUser: req.params.id});
   if (userCart) {
-    await CartModel.deleteMany({})
+    await CartModel.deleteMany({idUser: req.params.id})
     res.send({message: 'deleted cart success'});
   } else {
     res.send("error in delete cart");

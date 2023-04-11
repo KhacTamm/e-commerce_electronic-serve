@@ -57,3 +57,21 @@ export const DeleteUser = expressAsyncHandler(async (req, res) => {
         res.send({message: 'user not exists'})
     }
 })
+
+export const UpdateUser = expressAsyncHandler(async (req, res) => {
+    const user = await UserModel.findById({_id: req.params.id})
+
+    console.log(req.body)
+
+    if(user){
+        user.name = req.body.name,
+        user.email = req.body.email,
+        user.address = req.body.address,
+        user.phone = req.body.phone,
+        user.password = req.body.password,
+        res.send(user)
+    }else{
+        res.send({message: 'user not exists'})
+    }
+})
+
