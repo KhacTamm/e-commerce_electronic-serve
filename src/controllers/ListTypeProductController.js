@@ -36,6 +36,25 @@ export const deleteTypeProduct = expressAsyncHandler(async (req, res) => {
 
 })
 
+export const paginationTyPeProduct = expressAsyncHandler(async (req, res) => {
+    var perPage = 5
+    var page = req.params.page || 1
+    ListTypeProductModel
+        .find({})
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec(function(err, products) {
+            ListTypeProductModel.countDocuments().exec(function(err, count) {
+                if (err) return next(err)
+                res.send({
+                    typeProducts: products,
+                    current: page,
+                    pages: Math.ceil(count / perPage)
+                })
+            })
+        })
+})
+
 // export const DeleteTypeProduct = expressAsyncHandler(async (req, res) => {
 //     const deleteTypeProduct = await ListTypeProductModel.findById(req.params.id)
 

@@ -5,8 +5,8 @@ const Schema = mongoose.Schema;
 const User = new Schema({
     // accountId: { type: Schema.Types.ObjectId, required: true, ref: 'account' },
     name:{type: String},
-    email: {type: String, required: true, unique: true},
-    password: {type: String, required: true},
+    email: {type: String, unique: true},
+    password: {type: String},
     address: {type:String},
     phone: {type: String},
     isAdmin: {type: Boolean}

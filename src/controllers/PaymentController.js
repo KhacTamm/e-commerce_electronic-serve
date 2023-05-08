@@ -60,7 +60,7 @@ export const createPayment = expressAsyncHandler(async (req, res) => {
   var locale = "vn";
   var currCode = "VND";
   var vnp_Params = {};
-  vnp_Params["vnp_Version"] = "2";
+  vnp_Params["vnp_Version"] = "2.1.0";
   vnp_Params["vnp_Command"] = "pay";
   vnp_Params["vnp_TmnCode"] = tmnCode;
 
@@ -84,7 +84,7 @@ export const createPayment = expressAsyncHandler(async (req, res) => {
 
   vnp_Params["vnp_SecureHashType"] = "SHA256";
   vnp_Params["vnp_SecureHash"] = secureHash;
-  vnpUrl += "?" + querystring.stringify(vnp_Params, { encode: true });
+  vnpUrl += "?" + querystring.stringify(vnp_Params, { encode: false });
 
   res.status(200).json({ code: "00", data: vnpUrl });
 });

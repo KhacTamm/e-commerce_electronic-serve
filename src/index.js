@@ -17,7 +17,6 @@ import {ConnectSocket} from './config/socket/socket.js'
 
 import cloudinary from './config/cloudinary/cloudinary.js'
 import PaymentRouter from './routers/PaymentRouter.js'
-import SelectListrouter from './routers/SelectListRouter.js'
 import ListTypeProductRouter from './routers/ListTypeProductRouter.js'
 import ListBrandProductRouter  from './routers/ListBrandProductRouter.js'
 
@@ -41,7 +40,6 @@ app.use('/cart', CartRouter)
 app.use('/order', OrderRouter)
 app.use('/chat', ChatRouter)
 app.use('/payment', PaymentRouter)
-app.use('/selectList', SelectListrouter)
 app.use('/typeList', ListTypeProductRouter)
 app.use('/brandList', ListBrandProductRouter)
 

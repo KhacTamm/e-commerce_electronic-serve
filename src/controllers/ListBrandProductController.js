@@ -38,7 +38,7 @@ export const deleteBrandProduct = expressAsyncHandler(async (req, res) => {
 
 
 export const paginationBrandProduct = expressAsyncHandler(async (req, res) => {
-    var perPage = 4
+    var perPage = 5
     var page = req.params.page || 1
 
     ListBrandProductModel
@@ -49,9 +49,9 @@ export const paginationBrandProduct = expressAsyncHandler(async (req, res) => {
             ListBrandProductModel.countDocuments().exec(function(err, count) {
                 if (err) return next(err)
                 res.send({
-                    // ListBrannd: brand,
+                    ListBrannd: brand,
                     current: page,
-                    // pages: Math.ceil(count / perPage)
+                    pages: Math.ceil(count / perPage)
                 })
             })
         })

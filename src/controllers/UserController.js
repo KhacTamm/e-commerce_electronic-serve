@@ -9,6 +9,8 @@ export const getAllUser = (req, res) => {
 }
 
 export const registerUser = expressAsyncHandler(async (req, res) => {
+ 
+ console.log(req.body.name)
     const user = new UserModel({
         name: req.body.name,
         email: req.body.email,
@@ -31,6 +33,7 @@ export const registerUser = expressAsyncHandler(async (req, res) => {
 
 export const login = expressAsyncHandler(async (req, res) => {
     const user = await  UserModel.findOne({email: req.body.email, password: req.body.password})
+
     if(user){ 
         res.send({
             _id: user._id,
@@ -43,7 +46,31 @@ export const login = expressAsyncHandler(async (req, res) => {
             token: generateToken(user),
         });
     }else{
-        res.status(401).send({message: "invalid email or password"})
+        res.status(401).send({message: "Email hoặc mật khẩu không hợp lệ"})
+    }
+})
+
+export const UpdateUser = expressAsyncHandler(async (req, res) => {
+    const user = await UserModel.findOne({_id: req.params.id})
+
+    if(user){
+        user.name = req.body.name;
+        user.phone = req.body.phone;
+        user.address = req.body.address;
+        if(req.body.password != undefined) {
+            user.password = req.body.password
+        }
+        
+        const updateUser = await user.save();
+
+
+        if (updateUser) {
+            return res
+            .status(201)
+            .send(updateUser);
+        }
+    }else{
+        res.send({message: 'user not exists'})
     }
 })
 
@@ -58,20 +85,5 @@ export const DeleteUser = expressAsyncHandler(async (req, res) => {
     }
 })
 
-export const UpdateUser = expressAsyncHandler(async (req, res) => {
-    const user = await UserModel.findById({_id: req.params.id})
 
-    console.log(req.body)
-
-    if(user){
-        user.name = req.body.name,
-        user.email = req.body.email,
-        user.address = req.body.address,
-        user.phone = req.body.phone,
-        user.password = req.body.password,
-        res.send(user)
-    }else{
-        res.send({message: 'user not exists'})
-    }
-})
 

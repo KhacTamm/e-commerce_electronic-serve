@@ -3,9 +3,10 @@ import {getAllUser, registerUser, login, DeleteUser, UpdateUser} from '../contro
 const UserRouter = express.Router()
 import {isAuth, isAdmin} from '../untils/until.js'
 
+UserRouter.put('/update/:id', UpdateUser)
+// UserRouter.post('/update/:id', registerUser)
 UserRouter.post('/register', registerUser)
 UserRouter.post('/login', login)
-UserRouter.put('/update/:id', UpdateUser)
 
 UserRouter.get('/', getAllUser)
 UserRouter.delete('/delete/:id', DeleteUser)

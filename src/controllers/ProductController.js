@@ -123,6 +123,8 @@ export const UpdateProduct = expressAsyncHandler(async (req, res) => {
     product.special = req.body.special;
     product.design = req.body.design;
 
+    console.log(req.body.name)
+
     const updateProduct = await product.save();
     if (updateProduct) {
         return res
@@ -142,6 +144,7 @@ export const HandlePaymentProduct = expressAsyncHandler(async (req, res) => {
     const product = await ProductModel.findById(id);
     if(product) {
         product.amount = product.amount - data[i].qty;
+        product.rating = product.rating + data[i].qty;
         // console.log(product.amount)
         const updateProduct = await product.save();
         if (updateProduct) {

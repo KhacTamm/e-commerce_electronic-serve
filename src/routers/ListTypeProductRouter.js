@@ -3,28 +3,23 @@ import {
   createNewTypeProduct,
   deleteTypeProduct,
   getAllTypeProduct,
+  paginationTyPeProduct
 } from "../controllers/ListTypeProductController.js";
+
 import  {upload}  from "../untils/until.js";
 
 const ListTypeProductRouter = express.Router();
 
-ListTypeProductRouter.get("/", getAllTypeProduct);
+ListTypeProductRouter.get(`/pagination/:page`, paginationTyPeProduct);
 ListTypeProductRouter.post(
   "/create",
   upload.single("image"),
   createNewTypeProduct
-);
+  );
 ListTypeProductRouter.delete(
   "/delete/:id",
   deleteTypeProduct
 );
-
-// deleteTypeProduct.delete(
-//   "/delete/:id",
-//   // isAuth,
-//   // isAdmin,
-//   upload.single("image"),
-//   DeleteProduct
-// );
+ListTypeProductRouter.get("/", getAllTypeProduct);
 
 export default ListTypeProductRouter;
